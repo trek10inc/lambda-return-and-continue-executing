@@ -1,0 +1,37 @@
+Transform:
+  # - AWS::LanguageExtensions
+  - AWS::Serverless-2016-10-31
+
+Description: Testing various lambda streaming response configurations
+
+Resources:
+  Trek10LambdaTestFunctionWithUrl:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      FunctionName: Trek10-Lambda-Test-Function-With-Url
+      CodeUri: ./src
+      Runtime: nodejs18.x
+      Timeout: 30
+  Trek10LambdaTestUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      AuthType: NONE
+      InvokeMode: RESPONSE_STREAM
+      TargetFunctionArn: !GetAtt Trek10LambdaTestFunctionWithUrl.Arn
+  Trek10LambdaTestUrlPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunctionUrl
+      FunctionUrlAuthType: NONE
+      Principal: '*'
+      FunctionName: !GetAtt Trek10LambdaTestFunctionWithUrl.Arn
+
+  Trek10LambdaTestFunctionWithNoUrl:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      FunctionName: Trek10-Lambda-Test-Function-With-No-Url
+      CodeUri: ./src
+      Runtime: nodejs18.x
+      Timeout: 30
