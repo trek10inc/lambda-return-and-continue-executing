@@ -1,1 +1,1 @@
-Code / templates for this [blog post](https://trek10.com/blog/)
+Code / templates for this [blog post](https://www.trek10.com/blog/aws-lambda-functions-return-response-and-continue-executing)
